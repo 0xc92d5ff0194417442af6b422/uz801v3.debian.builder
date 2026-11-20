@@ -1,0 +1,8 @@
+# settings with passwords: mount at run time, never copy into the image
+*.env
+
+# build output and generated files
+work/
+*.raw
+*.zip
+*.tgz
