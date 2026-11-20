@@ -3,8 +3,8 @@
 *.zip
 *.mbn
 *.tgz
-build
-dist
-files
-mnt
-rootfs
+work/
+config.env
+
+# Wi-Fi firmware in the device tree is needed by the image
+!device/board/firmware/**
