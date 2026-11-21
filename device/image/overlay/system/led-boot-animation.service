@@ -1,0 +1,10 @@
+[Unit]
+Description=Show the LED animation after boot
+
+[Service]
+# simple: the start job ends at once, so the wait below does not hold up startup
+Type=simple
+ExecStart=/usr/sbin/led-boot.sh animate
+
+[Install]
+WantedBy=multi-user.target

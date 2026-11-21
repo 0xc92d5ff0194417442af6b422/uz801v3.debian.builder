@@ -1,0 +1,12 @@
+[Unit]
+Description=Expand root filesystem to fill its partition
+ConditionPathExists=!/var/lib/resize-rootfs.done
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=@ROOT_RESIZE_CMD@
+ExecStartPost=/bin/touch /var/lib/resize-rootfs.done
+
+[Install]
+WantedBy=sysinit.target

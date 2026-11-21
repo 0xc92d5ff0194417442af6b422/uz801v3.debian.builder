@@ -1,0 +1,13 @@
+[Unit]
+Description=zram swap using all RAM
+DefaultDependencies=no
+Before=swap.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/zram-swap.sh start
+ExecStop=/usr/sbin/zram-swap.sh stop
+
+[Install]
+WantedBy=multi-user.target

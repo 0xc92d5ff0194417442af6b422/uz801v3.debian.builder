@@ -1,0 +1,12 @@
+[Unit]
+Description=Show boot progress: blue LED after basic system start
+DefaultDependencies=no
+After=basic.target
+Before=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/led-boot.sh progress red:power
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,27 @@
+#!/bin/sh -e
+B=${UZ801_BOOT:-/boot}
+CONF=${B}/extlinux/extlinux.conf
+BAK=${B}/extlinux/extlinux.conf.bak
+case "${1:-status}" in
+    status)
+        echo "boot entry:"; grep -E "^\s*(linux|fdt)" "${CONF}"
+        echo "installed kernels:"; for k in "${B}"/vmlinuz-*; do if [ -e "$k" ]; then echo "  ${k##*/vmlinuz-}"; fi; done
+        ;;
+    set)
+        KVER=${2:?usage: uz801-kernel set KVER}
+        [ -f "${B}/vmlinuz-${KVER}" ] || { echo "no kernel ${KVER} in ${B}" >&2; exit 1; }
+        DTB=$(ls "${B}"/dtbs/qcom/*-"${KVER}".dtb | head -1)
+        [ -n "${DTB}" ] || { echo "no DTB for ${KVER} in ${B}/dtbs/qcom" >&2; exit 1; }
+        # The first set keeps the backup. A later set does not replace it, so revert returns to the original entry.
+        [ -f "${BAK}" ] || cp -a "${CONF}" "${BAK}"
+        sed -i -e "s#^\(\s*linux\s\+\).*#\1/vmlinuz-${KVER}#" \
+               -e "s#^\(\s*fdt\s\+\).*#\1/dtbs/qcom/$(basename "${DTB}")#" "${CONF}"
+        echo "boot entry set to ${KVER}; reboot to use it. Revert with: uz801-kernel revert"
+        ;;
+    revert)
+        [ -f "${BAK}" ] || { echo "no backup of the boot entry" >&2; exit 1; }
+        mv -f "${BAK}" "${CONF}"
+        echo "boot entry restored from backup; reboot to use it"
+        ;;
+    *) echo "usage: uz801-kernel [status|set KVER|revert]" >&2; exit 2 ;;
+esac

@@ -1,0 +1,11 @@
+[Unit]
+Description=Disable transparent huge pages
+ConditionPathExists=/sys/kernel/mm/transparent_hugepage/enabled
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'echo never > /sys/kernel/mm/transparent_hugepage/enabled'
+
+[Install]
+WantedBy=multi-user.target

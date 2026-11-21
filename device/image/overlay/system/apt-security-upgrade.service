@@ -1,0 +1,8 @@
+[Unit]
+Description=Install security updates
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/apt-security-upgrade.sh

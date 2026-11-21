@@ -1,0 +1,13 @@
+[Unit]
+Description=Generate the Wi-Fi MAC address on first boot
+DefaultDependencies=no
+Before=systemd-udev-trigger.service
+ConditionPathExists=!/usr/lib/firmware/wcnss_mac_addr
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/wcnss-mac-address.sh
+
+[Install]
+WantedBy=sysinit.target

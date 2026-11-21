@@ -1,0 +1,12 @@
+[Unit]
+Description=Forward the journal to the log receiver at @LOG_FORWARD_HOST@
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/bin/bash -c "exec 3<>/dev/tcp/@LOG_FORWARD_HOST@/@LOG_FORWARD_PORT@; exec journalctl -b -f -o short-precise --no-pager >&3"
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

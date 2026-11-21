@@ -1,0 +1,10 @@
+[Unit]
+Description=Nightly security updates
+
+[Timer]
+OnCalendar=*-*-* @UPGRADE_TIME@
+RandomizedDelaySec=@UPGRADE_DELAY@
+Persistent=true
+
+[Install]
+WantedBy=timers.target
