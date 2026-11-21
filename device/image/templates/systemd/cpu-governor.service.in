@@ -1,0 +1,14 @@
+[Unit]
+Description=Set CPU frequency governor to @CPU_GOVERNOR@
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c 'for g in /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor; do echo @CPU_GOVERNOR@ > "$g"; done'
+ExecStart=/bin/sh -c 'list="@CPU_ACTIVE_CORES@"; [ -n "$list" ] || exit 0; for c in /sys/devices/system/cpu/cpu[1-9]*; do n=${c##*cpu}; case " $list " in *" $n "*) echo 1 > "$c/online" ;; *) echo 0 > "$c/online" ;; esac; done'
+ExecStart=/bin/sh -c 'max=@CPU_MAX_FREQ@; [ -n "$max" ] || exit 0; for p in /sys/devices/system/cpu/cpufreq/policy[0-9]*/scaling_max_freq; do echo "$max" > "$p"; done'
+# Turns off the deep idle state (cpu-sleep-0, power collapse) on every core. Systemd needs $$ for a shell variable.
+ExecStart=/bin/sh -c 'for d in /sys/devices/system/cpu/cpu[0-9]*/cpuidle/state1/disable; do [ -e "$$d" ] && echo 1 > "$$d"; done; exit 0'
+
+[Install]
+WantedBy=multi-user.target

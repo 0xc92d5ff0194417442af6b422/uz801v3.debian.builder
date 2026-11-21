@@ -1,0 +1,11 @@
+[Unit]
+Description=Show boot progress: red LED after multi-user start
+DefaultDependencies=no
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/led-boot.sh progress green:wlan
+
+[Install]
+WantedBy=multi-user.target

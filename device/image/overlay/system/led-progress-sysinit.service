@@ -1,0 +1,12 @@
+[Unit]
+Description=Show boot progress: green LED after system init
+DefaultDependencies=no
+After=sysinit.target
+Before=basic.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/led-boot.sh progress blue:wan
+
+[Install]
+WantedBy=basic.target

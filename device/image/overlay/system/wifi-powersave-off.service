@@ -1,0 +1,12 @@
+[Unit]
+Description=Turn off Wi-Fi power save on wlan0
+After=wpa_supplicant@wlan0.service
+Wants=wpa_supplicant@wlan0.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/iw dev wlan0 set power_save off
+
+[Install]
+WantedBy=multi-user.target

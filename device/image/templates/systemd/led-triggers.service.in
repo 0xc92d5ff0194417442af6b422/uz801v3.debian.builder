@@ -1,0 +1,15 @@
+[Unit]
+Description=Set LED triggers for Wi-Fi, eMMC, and CPU activity
+After=wpa_supplicant@wlan0.service
+
+[Service]
+# simple: the start job ends at once, so waiting for the animation does not hold up startup.
+# The triggers are set only after the boot animation has finished, because the animation
+# changes the trigger of every LED.
+# The netdev trigger has no "mode" file: wlan0, tx and rx are set after the trigger. With
+# another green trigger these files do not exist, and the errors are discarded.
+Type=simple
+ExecStart=/bin/sh -c 'systemctl is-system-running --wait >/dev/null; while systemctl is-active --quiet led-boot-animation.service; do sleep 0.5; done; for i in $(seq 30); do echo @LED_GREEN_TRIGGER@ > /sys/class/leds/green:wlan/trigger 2>/dev/null && break; sleep 1; done; echo wlan0 2>/dev/null > /sys/class/leds/green:wlan/device_name; echo 1 2>/dev/null > /sys/class/leds/green:wlan/tx; echo 1 2>/dev/null > /sys/class/leds/green:wlan/rx; echo @LED_BLUE_TRIGGER@ > /sys/class/leds/blue:wan/trigger; echo @LED_RED_TRIGGER@ > /sys/class/leds/red:power/trigger'
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Match]
+Name=usb0
+
+[Network]
+Address=@USB_ADDRESS@
+DHCP=no
+LinkLocalAddressing=no
+IPv6AcceptRA=no
+
+[Link]
+RequiredForOnline=no

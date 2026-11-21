@@ -1,0 +1,14 @@
+[Unit]
+Description=Load USB gadget scheme (@GADGET_NAME@)
+Requires=sys-kernel-config.mount
+After=sys-kernel-config.mount
+
+[Service]
+ExecStartPre=/usr/sbin/modprobe libcomposite
+ExecStart=/usr/bin/gt load @GADGET_SCHEME@ @GADGET_NAME@
+RemainAfterExit=yes
+ExecStop=/usr/bin/gt rm -rf @GADGET_NAME@
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

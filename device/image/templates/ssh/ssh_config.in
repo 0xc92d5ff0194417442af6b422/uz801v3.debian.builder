@@ -1,0 +1,43 @@
+Host *
+    Ciphers @SSH_CIPHERS@
+    MACs @SSH_MACS@
+    KexAlgorithms @SSH_KEX@
+    HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-ed25519
+    GSSAPIAuthentication no
+    HashKnownHosts yes
+    RekeyLimit 512M 1h
+
+    StrictHostKeyChecking ask
+    CheckHostIP yes
+    VerifyHostKeyDNS ask
+    ForwardAgent no
+    ForwardX11 no
+    ForwardX11Trusted no
+    PasswordAuthentication no
+    ChallengeResponseAuthentication no
+    PubkeyAuthentication yes
+    PreferredAuthentications publickey
+
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    ConnectTimeout 30
+
+    GSSAPIKeyExchange no
+    GSSAPIDelegateCredentials no
+    HostbasedAuthentication no
+    KbdInteractiveAuthentication no
+
+    Protocol 2
+    Compression no
+
+    AddKeysToAgent yes
+    IdentitiesOnly yes
+
+    LogLevel INFO
+
+    VisualHostKey no
+
+    UpdateHostKeys ask
+    CanonicalizeHostname yes
+    CanonicalizeFallbackLocal no
+    CanonicalizeMaxDots 1

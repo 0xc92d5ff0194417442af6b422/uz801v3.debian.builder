@@ -1,0 +1,15 @@
+/ {
+	reserved-memory {
+		ramoops_mem: ramoops@@CRASH_CAPTURE_NODE@ {
+			reg = <0x0 @CRASH_CAPTURE_ADDR@ 0x0 @CRASH_CAPTURE_SIZE@>;
+			no-map;
+		};
+	};
+
+	ramoops {
+		compatible = "ramoops";
+		memory-region = <&ramoops_mem>;
+		record-size = <0x20000>;
+		console-size = <0x20000>;
+	};
+};
