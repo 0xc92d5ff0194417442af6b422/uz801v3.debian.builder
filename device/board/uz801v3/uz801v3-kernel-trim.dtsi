@@ -1,0 +1,81 @@
+// Nodes removed from the kernel UZ801 v3 device tree. Appended to the kernel DTS by lib/steps/21-build-kernel.sh.
+// Modem, multimedia, CoreSight and the peripherals in device/board/uz801v3/uz801v3-wifi-no-modem.dts that the kernel DTB had.
+/delete-node/ &mba_mem;
+/delete-node/ &mpss_mem;
+/delete-node/ &{/reserved-memory/rfsa@867e0000};
+/delete-node/ &{/reserved-memory/rmtfs@86700000};
+/delete-node/ &venus_mem;
+/delete-node/ &{/smp2p-hexagon};
+/delete-node/ &hexagon_smsm;
+/delete-node/ &lpass_codec;
+/delete-node/ &lpass;
+/delete-node/ &camss;
+/delete-node/ &cci;
+/delete-node/ &cti0;
+/delete-node/ &cti1;
+/delete-node/ &cti12;
+/delete-node/ &cti13;
+/delete-node/ &cti14;
+/delete-node/ &cti15;
+/delete-node/ &debug0;
+/delete-node/ &debug1;
+/delete-node/ &debug2;
+/delete-node/ &debug3;
+/delete-node/ &mdss;
+/delete-node/ &etf;
+/delete-node/ &etm0;
+/delete-node/ &etm1;
+/delete-node/ &etm2;
+/delete-node/ &etm3;
+/delete-node/ &etr;
+/delete-node/ &funnel0;
+/delete-node/ &funnel1;
+/delete-node/ &gpu;
+/delete-node/ &blsp_i2c1;
+/delete-node/ &blsp_i2c2;
+/delete-node/ &blsp_i2c3;
+/delete-node/ &blsp_i2c4;
+/delete-node/ &blsp_i2c5;
+/delete-node/ &blsp_i2c6;
+/delete-node/ &apps_iommu;
+/delete-node/ &gpu_iommu;
+/delete-node/ &sdhc_2;
+/delete-node/ &mpss;
+/delete-node/ &wcnss_bt;
+/delete-node/ &replicator;
+/delete-node/ &blsp_uart1;
+/delete-node/ &sound;
+/delete-node/ &blsp_spi1;
+/delete-node/ &blsp_spi2;
+/delete-node/ &blsp_spi3;
+/delete-node/ &blsp_spi4;
+/delete-node/ &blsp_spi5;
+/delete-node/ &blsp_spi6;
+/delete-node/ &pm8916_bms;
+/delete-node/ &pm8916_charger;
+/delete-node/ &pm8916_resin;
+/delete-node/ &pm8916_codec;
+/delete-node/ &pm8916_pwm;
+/delete-node/ &pm8916_vib;
+/delete-node/ &stm;
+/delete-node/ &tpiu;
+/delete-node/ &venus;
+/delete-node/ &{/thermal-zones/camera-thermal};
+/delete-node/ &{/thermal-zones/gpu-thermal};
+/delete-node/ &{/thermal-zones/modem-thermal};
+/delete-node/ &bimc;
+/delete-node/ &pcnoc;
+/delete-node/ &snoc;
+/delete-node/ &{/soc@0/sram@290000};
+/delete-node/ &{/reserved-memory/reserved@86680000};
+
+// all LEDs start off
+&led_r {
+	default-state = "off";
+};
+&led_g {
+	default-state = "off";
+};
+&led_b {
+	default-state = "off";
+};
