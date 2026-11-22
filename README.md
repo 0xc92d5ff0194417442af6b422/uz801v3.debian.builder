@@ -1,172 +1,51 @@
-# OpenStick Image Builder
-Image builder for MSM8916 based 4G modem dongles
+# uz801v3.debian.builder
 
-This builder uses the precompiled [kernel](https://pkgs.postmarketos.org/package/v24.06/postmarketos/aarch64/linux-postmarketos-qcom-msm8916) provided by [postmarketOS](https://postmarketos.org/) for Qualcomm MSM8916 devices.
+uz801v3.debian.builder builds a Debian arm64 image for the [UZ801 v3 USB 4G and Wi-Fi stick](https://www.aliexpress.com/item/1005010169664336.html). The board uses a Qualcomm MSM8916 chip. 
 
-> [!NOTE]
-> This branch generates a `debian` image, use the [alpine branch](https://github.com/kinsamanka/OpenStick-Builder/tree/alpine) for an `alpine` image.
+The build runs on an x86 Linux host. One run makes the bootloader, the kernel, the root filesystem and the flash images.
 
-## Build Instructions
-### Build locally
-This has been tested to work on **Ubuntu 22.04**
-- clone
-  ```shell
-  git clone --recurse-submodules https://github.com/kinsamanka/OpenStick-Builder.git
-  cd OpenStick-Builder/
-  ```
-#### Quick
-- build
-  ```shell
-  cd OpenStick-Builder/
-  sudo ./build.sh
-  ```
-#### Detailed
-- install dependencies
-  ```shell
-  sudo scripts/install_deps.sh
-  ```
-- build hyp and lk2nd
+## Features
 
-  these custom bootloader allows basic support for `extlinux.conf` file, similar to u-boot and depthcharge.
-  ```shell
-  sudo scripts/build_hyp_aboot.sh
-  ```
-- extract Qualcomm firmware
+- Debian `trixie` root filesystem, built with debootstrap. The arm64 steps run under qemu.
+- Kernel 6.12.118 (LTS), built from source, with optional patches: BBR v3, LE9UO, zstd, CPR and SMSM. The CPR patch adds the higher CPU frequencies (1094400, 1152000 and 1209600 kHz) [*](docs/kernel.md#patches)
+- Root filesystem as ext4, xfs or btrfs. btrfs can compress the data.
+- Wi-Fi, Bluetooth, modem and USB gadget modes. You set each one in `config.env`.
+- SSH with key-only login and a firewall.
+- Optional zram swap.
+- Trimmed device tree (`TRIM_DTB="yes"`). The usable memory rises from 317 MB to 476 MB. [*](docs/kernel.md#device-tree-trimming)
+- One file, `config.env`, holds all settings. A failed build can resume from a step.
+- A Docker image for the build.
 
-  extracts the bootloader and creates a new partition table that utilizes the full emmc space
-  ```shell
-  sudo scripts/extract_fw.sh
-  ```
-- create rootfs using debootstrap
-  ```shell
-  sudo scripts/debootstrap.sh
-  ```
+## Quick start
 
-- build gadget-tools
-  ```shell
-  sudo scripts/build_gt.sh
-  ```
-- create images
-  ```shell
-  sudo scripts/build_images.sh
-  ```
+1. Copy an example file and set the required values:
 
-The generated firmware files will be stored under the `files` directory
+   ```sh
+   cp config/config.env.example config.env
+   chmod 600 config.env
+   ```
 
-### On the cloud using Github Actions
-1. Fork this repo
-2. Run the [Build workflow](../../actions/workflows/build.yml)
-   - click and run ***Run workflow***
-   - once the workflow is done, click on the workflow summary and then download the resulting artifact
+   Set `ADMIN_SSH_KEYS`, `WIFI_SSID`, `WIFI_PASSWORD` and `WIFI_COUNTRY`.
 
-## Customizations
-Edit [`scripts/setup.sh`](scripts/setup.sh) to add/remove packages. Note that this script is running inside the `chroot` environment.
+2. Run the build as root:
 
-## Firmware Installation
-> [!WARNING]  
-> The following commands can potentially brick your device, making it unbootable. Proceed with caution and at your own risk!
+   ```sh
+   sudo sh build.sh
+   ```
 
-> [!IMPORTANT]  
-> Make sure to perform a backup of the original firmware using the command `edl rf orig_fw.bin`
+3. Get the images from `work/files/`.
 
-### Prerequisites
-- [EDL](https://github.com/bkerler/edl)
-- Android fastboot tool
-  ```
-  sudo apt install fastboot
-  ```
+To build in Docker, see [Docker build](docs/docker.md).
 
-### Steps
-- Enter Qualcom EDL mode using this [guide](https://wiki.postmarketos.org/wiki/Zhihe_series_LTE_dongles_(generic-zhihe)#How_to_enter_flash_mode)
-- Backup required partitions
+## Documentation
 
-  The following files are required from the original firmware:
-  
-     - `fsc.bin`
-     - `fsg.bin`
-     - `modem.bin`
-     - `modemst1.bin`
-     - `modemst2.bin`
-     - `persist.bin`
-     - `sec.bin`
+- [Build](docs/build.md): requirements, steps, switches and outputs.
+- [Setup](docs/configuration.md): required values and example files.
+- [Kernel](docs/kernel.md): kernel options, patches and device tree trimming.
+- [Device](docs/device.md): first boot, network, SSH, LEDs and logs.
+- [Docker build](docs/docker.md): build and run the image in a container.
+- [Kernel update](docs/kernel-update.md): install a new kernel on a running device.
 
-  Skip this step if these files are already present
-  ```shell
-  for n in fsc fsg modem modemst1 modemst2 persist sec; do
-      edl r ${n} ${n}.bin
-  done
-  ```
-- Install `aboot`
-  ```shell
-  edl w aboot aboot.mbn
-  ```
-- Reboot to fastboot
-  ```shell
-  edl e boot
-  edl reset
-  ```
-- Flash firmware
-  ```shell
-  fastboot flash partition gpt_both0.bin
-  fastboot flash aboot aboot.mbn
-  fastboot flash hyp hyp.mbn
-  fastboot flash rpm rpm.mbn
-  fastboot flash sbl1 sbl1.mbn
-  fastboot flash tz tz.mbn
-  fastboot flash boot boot.bin
-  fastboot flash rootfs rootfs.bin
-  ```
-- Restore original partitions
-  ```shell
-  for n in fsc fsg modem modemst1 modemst2 persist sec; do
-      fastboot flash ${n} ${n}.bin
-  done
-  ```
-- Reboot
-  ```shell
-  fastboot reboot
-  ```
+## License
 
-## Post-Install
-- Network configuration
-  
-  | wlan0 | |
-  | ----- | ---- |
-  | ssid | Openstick |
-  | password | openstick |
-  | ip addr | 192.168.4.1 |
-
-  | usb0 | |
-  | ----- | ---- |
-  | ip addr | 192.168.5.1 |
-
-- Default user
-  
-  | | |
-  | ----- | ---- |
-  | username | user |
-  | password | 1 |
- 
-- If your device is not based on **UZ801**, modify `/boot/extlinux/extlinux.conf` to use the correct devicetree
-  ```shell
-  sed -i 's/yiming-uz801v3/<BOARD>/' /boot/extlinux/extlinux.conf
-  ```
-
-  where `<BOARD>` is
-     - `thwc-uf896` for **UF896** boards
-     - `thwc-ufi001c` for **UFIxxx** boards
-     - `jz01-45-v33` for **JZxxx** boards
-     - `fy-mf800` for **MF800** boards
-
-- To maximize the `rootfs` partition
-  ```shell
-  resize2fs /dev/disk/by-partlabel/rootfs
-  ```
-
-- To update the kernel of the `debian` image
-  ```shell
-  wget -O - http://mirror.postmarketos.org/postmarketos/<branch>/aarch64/linux-postmarketos-qcom-msm8916-<version>.apk \
-          | tar xkzf - -C / --exclude=.PKGINFO --exclude=.SIGN* 2>/dev/null
-  ```
-
-  Specify the correct `<branch>` and `<version>` values.
+See [LICENSE](LICENSE).
