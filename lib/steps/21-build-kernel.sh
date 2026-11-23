@@ -96,6 +96,8 @@ if [ "${WIFI}" = yes ]; then
     set_config CONFIG_CFG80211 m
     set_config CONFIG_MAC80211 m
     set_config CONFIG_WCN36XX m
+    set_config CONFIG_CFG80211_CERTIFICATION_ONUS y
+    unset_config CONFIG_CFG80211_REQUIRE_SIGNED_REGDB
 else
     unset_config CONFIG_WCN36XX
     unset_config CONFIG_MAC80211
