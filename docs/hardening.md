@@ -61,7 +61,7 @@ The files in `/etc/sysctl.d/` set these values. The build copies all of them, ex
 
 `/etc/modprobe.d/zz-custom.conf` blocks modules at run time. Each blocked module runs `/bin/false` on install and is blacklisted.
 
-The kernel build also turns off most of these modules. `device/kernel/blocked-modules.txt` sets the matching `CONFIG_*` options to `is not set`, on every build. The build then does not compile them. Some names in the file, such as `decnet` and `ipx`, have no option in Linux 6.12, so only the blocklist applies to them.
+The kernel build also turns off most of these modules. The minimal list in `device/kernel/minimal-kernel.txt` sets the matching `CONFIG_*` options to `is not set` when `MINIMAL_KERNEL="yes"`. The build then does not compile them. Some names in the file, such as `decnet` and `ipx`, have no option in Linux 6.12, so only the blocklist applies to them.
 
 - The file in the overlay blocks drivers and filesystems that this board does not use. Examples are `cifs`, `cdrom`, `cramfs` and several framebuffer and video drivers.
 - Step 62 adds blocks for features that are off:
