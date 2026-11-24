@@ -224,11 +224,18 @@ fi
 if [ "${USB_GADGET}" = yes ]; then
     EXTRA_PACKAGES="${EXTRA_PACKAGES:-} libconfig11"
 fi
+# The watchdog daemon reads its config from the overlay file watchdog.conf.
+WATCHDOG=${WATCHDOG:-no}
+check_choice WATCHDOG "yes no"
+if [ "${WATCHDOG}" = yes ]; then
+    EXTRA_PACKAGES="${EXTRA_PACKAGES:-} watchdog"
+    ENABLE_SERVICES="${ENABLE_SERVICES} watchdog.service"
+fi
 # The modem firmware is not in the repository, so the build can only warn.
 if [ "${MODEM}" = yes ]; then
     echo "WARNING: MODEM=yes needs the modem firmware (mba.mbn, mpss.mdt) in device/board/firmware; this build does not copy it" >&2
 fi
-export WIFI BLUETOOTH MODEM USB_GADGET ENABLE_SERVICES MASK_SERVICES EXTRA_PACKAGES
+export WIFI BLUETOOTH MODEM USB_GADGET WATCHDOG ENABLE_SERVICES MASK_SERVICES EXTRA_PACKAGES
 ADMIN_USER=${ADMIN_USER:-admin}
 export ADMIN_USER
 if ! printf '%s\n' "${ADMIN_USER}" | grep -qE '^[a-z_][a-z0-9_-]*$' || [ "${ADMIN_USER}" = root ]; then

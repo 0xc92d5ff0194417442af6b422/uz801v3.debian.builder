@@ -136,6 +136,7 @@ Only the network modes (`rndis`, `ecm`, `cdc-ecm` and `acm-ecm`) get the `usb0` 
 | `LOG_LEVEL` | `normal` | `full`, `normal`, `minimal` or `none`. |
 | `LOG_MAX_SIZE` | `50M` | The journal size limit. |
 | `LOG_FORWARD` | `no` | Sends logs to `LOG_FORWARD_TARGET` (`host:port`). |
+| `WATCHDOG` | `no` | Installs the watchdog daemon and enables it at boot. The daemon reboots the device when it stops feeding the watchdog for 60 seconds. The timeout and interval are in `device/image/overlay/watchdog/etc/watchdog.conf`. |
 | `DEBUG_SERVICES` | `no` | Sets systemd to write debug output in the image. |
 
 ## Rules for values
