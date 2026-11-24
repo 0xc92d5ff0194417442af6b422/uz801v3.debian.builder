@@ -42,6 +42,11 @@ if [ "${USB_GADGET}" = yes ]; then
     ln -sf /etc/systemd/system/usb-gadget.service "${CHROOT}"/etc/systemd/system/multi-user.target.wants/usb-gadget.service
 fi
 
+# The watchdog package is installed by settings.sh. Its config replaces the package default.
+if [ "${WATCHDOG}" = yes ]; then
+    cp -a --no-preserve=ownership device/image/overlay/watchdog/etc/. "${CHROOT}"/etc/
+fi
+
 if [ "${LOG_FORWARD}" = yes ]; then
     LOG_FORWARD_HOST=${LOG_FORWARD_TARGET%:*}
     LOG_FORWARD_PORT=${LOG_FORWARD_TARGET##*:}
