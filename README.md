@@ -43,6 +43,7 @@ To build in Docker, see [Docker build](docs/docker.md).
 - [Setup](docs/configuration.md): required values and example files.
 - [Kernel](docs/kernel.md): kernel options, patches and device tree trimming.
 - [Device](docs/device.md): first boot, network, SSH, LEDs and logs.
+- [Debian configuration](docs/debian-configuration.md): packages, hardening, SSH, firewall, services and scripts.
 - [Docker build](docs/docker.md): build and run the image in a container.
 - [Kernel update](docs/kernel-update.md): install a new kernel on a running device.
 
