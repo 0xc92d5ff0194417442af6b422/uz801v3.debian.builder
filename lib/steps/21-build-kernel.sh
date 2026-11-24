@@ -51,10 +51,10 @@ replace_config() {
 }
 set_config() { replace_config "$1" "$1=$2"; }
 unset_config() { replace_config "$1" "# $1 is not set"; }
-# The minimal list is applied first. A custom KERNEL_OPTIONS file comes after it, so it can override the list.
-KERNEL_OPTION_FILES=""
+# The blocked-modules list is applied first, on every build. The minimal list comes next. A custom KERNEL_OPTIONS file comes last, so it can override both.
+KERNEL_OPTION_FILES="device/kernel/blocked-modules.txt"
 if [ "${MINIMAL_KERNEL}" = yes ]; then
-    KERNEL_OPTION_FILES="device/kernel/minimal-kernel.txt"
+    KERNEL_OPTION_FILES="${KERNEL_OPTION_FILES} device/kernel/minimal-kernel.txt"
 fi
 if [ -n "${KERNEL_OPTIONS}" ]; then
     KERNEL_OPTION_FILES="${KERNEL_OPTION_FILES} ${KERNEL_OPTIONS}"
