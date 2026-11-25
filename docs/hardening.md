@@ -26,7 +26,7 @@ These settings limit accounts, login, sudo, the kernel and the network stack. Th
 ### Sessions
 
 - `logind` locks the screen after 15 minutes of idle time. It ends idle sessions after 900 seconds. It stops user processes when the session ends.
-- `/etc/default/useradd` sets `INACTIVE=30`. An account is disabled 30 days after its password expires.
+- `/etc/default/useradd` sets `INACTIVE=-1`. Accounts are never disabled after their password expires. Users see a warning 7 days before the password expires. After it expires, the user must change the password at login.
 
 ### Name resolution
 
