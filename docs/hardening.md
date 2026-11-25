@@ -28,6 +28,10 @@ These settings limit accounts, login, sudo, the kernel and the network stack. Th
 - `logind` locks the screen after 15 minutes of idle time. It ends idle sessions after 900 seconds. It stops user processes when the session ends.
 - `/etc/default/useradd` sets `INACTIVE=30`. An account is disabled 30 days after its password expires.
 
+### Name resolution
+
+- `systemd-resolved` has LLMNR and multicast DNS turned off. The drop-in is `/etc/systemd/resolved.conf.d/zz-resolved-hardening.conf`. The firewall also drops port 5355.
+
 ### sudo
 
 The files in `/etc/sudoers.d/` set these rules:
