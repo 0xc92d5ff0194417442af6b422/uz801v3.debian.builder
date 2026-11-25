@@ -1,5 +1,5 @@
 // Nodes removed from the kernel UZ801 v3 device tree. Appended to the kernel DTS by lib/steps/21-build-kernel.sh.
-// Modem, multimedia, CoreSight and the peripherals in device/board/uz801v3/uz801v3-wifi-no-modem.dts that the kernel DTB had.
+// Modem, multimedia, CoreSight and other peripherals that the upstream board DTB enables but this board does not use.
 /delete-node/ &mba_mem;
 /delete-node/ &mpss_mem;
 /delete-node/ &{/reserved-memory/rfsa@867e0000};
