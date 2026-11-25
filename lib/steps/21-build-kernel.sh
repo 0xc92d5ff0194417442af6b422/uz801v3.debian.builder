@@ -292,6 +292,7 @@ fi
     fi
     if [ "${WIFI}" = no ] && [ "${BLUETOOTH}" = no ]; then
         echo '&wcnss { status = "disabled"; };'
+        echo '&wcnss_mem { status = "disabled"; };'
     fi
     if [ "${TRIM_DTB}" = no ]; then
         printf '&%s { status = "disabled"; };\n' gpu mdss venus
