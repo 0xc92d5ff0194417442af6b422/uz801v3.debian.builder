@@ -38,10 +38,10 @@ PermitTTY yes
 PermitTunnel no
 PermitUserEnvironment no
 PermitUserRC no
+PerSourcePenalties yes
 Port @SSH_PORT@
 PrintLastLog yes
 PrintMotd no
-Protocol 2
 PubkeyAcceptedAlgorithms ssh-ed25519
 PubkeyAuthentication yes
 RekeyLimit 512M 1h
