@@ -71,6 +71,20 @@ Each step is a file in `lib/steps/`. The build runs the steps in filename order.
 
 After the last step, the build writes `work/files/device-info.env` and prints the admin password.
 
+## Source versions
+
+The source submodules in `work/src/` are pinned to these commits in the repository. The pins are not set in `config.env`.
+
+| Submodule | Pinned to |
+|---|---|
+| `lk2nd` | Release 23.1 (`e9c8b217`). |
+| `qhypstub` | `fca3c513`, the current default branch. |
+| `qtestsign` | `0eef3b55`, the current default branch. |
+| `libusbgx` | Release v0.3.0 (`dbedf16f`). |
+| `gt` | `8ebbf3eb`, the current default branch. |
+
+To move a submodule, check out the new commit inside `work/src/NAME`, then commit the change to the submodule path in the repository.
+
 ## Outputs
 
 The build writes all outputs to `work/files/`:
