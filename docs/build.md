@@ -51,7 +51,7 @@ Each step is a file in `lib/steps/`. The build runs the steps in filename order.
 |---|---|---|
 | 10 | install-build-deps | Installs the host packages and, for a built kernel, the kernel tools. Runs first on every build, including `--from` runs. |
 | 15 | fetch-sources | Fetches the source submodules into `work/src/`. |
-| 20 | build-hyp-aboot | Builds the hypervisor stub (qhypstub) and the lk2nd bootloader. |
+| 20 | build-hyp-aboot | Builds the hypervisor stub (qhypstub) and the lk2nd bootloader. Applies `device/bootloader/patches/lk2nd-restore-uz801-home-key.patch`, so the button enters fastboot. |
 | 21 | build-kernel | Downloads the kernel and the postmarketOS config. Applies the patches. Builds the kernel and the modules. |
 | 22 | package-kernel-deb | Packages the kernel as `.deb` files. Runs only with `--only-kernel`. |
 | 30 | make-gpt-image | Writes the partition table to `work/files/gpt_both0.bin`. |
