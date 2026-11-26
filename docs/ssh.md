@@ -16,9 +16,9 @@ The template `device/image/templates/ssh/sshd_config.in` sets these rules:
 | `MaxAuthTries` | `3` | Three failed attempts per connection. |
 | `LoginGraceTime` | `30` | 30 seconds to log in. |
 | `AllowTCPForwarding`, `AllowAgentForwarding`, `X11Forwarding` | `no` | No tunnels, agent forwarding or X11. |
-| `Ciphers`, `MACs`, `KexAlgorithms` | `SSHD_CIPHERS`, `SSHD_MACS`, `SSHD_KEX` | Algorithm lists from `config.env`. |
+| `Ciphers`, `MACs`, `KexAlgorithms` | Fixed in the template. | Cipher, MAC and key exchange lists. They are not set in `config.env`. |
 
-The client file `/etc/ssh/ssh_config` uses the lists `SSH_CIPHERS`, `SSH_MACS` and `SSH_KEX`.
+The client file `/etc/ssh/ssh_config` has its cipher, MAC and key exchange lists fixed in the template.
 
 Step 70 writes the public keys from `ADMIN_SSH_KEYS` to `~admin/.ssh/authorized_keys`.
 

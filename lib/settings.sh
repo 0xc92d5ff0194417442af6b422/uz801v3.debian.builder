@@ -73,19 +73,12 @@ if [ "${BOOT_SIZE}" -gt 67108864 ]; then
     fail "BOOT_SIZE must be at most 67108864, the size of the boot partition"
 fi
 
-# Algorithm lists for sshd and the ssh client. Weak algorithms are left out of the defaults.
-SSHD_CIPHERS=${SSHD_CIPHERS:-chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com}
-SSHD_MACS=${SSHD_MACS:-hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256}
-SSHD_KEX=${SSHD_KEX:-curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512}
-SSH_CIPHERS=${SSH_CIPHERS:-chacha20-poly1305@openssh.com,aes256-gcm@openssh.com}
-SSH_MACS=${SSH_MACS:-hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com}
-SSH_KEX=${SSH_KEX:-curve25519-sha256@libssh.org,diffie-hellman-group18-sha512}
 SSH_GROUP=${SSH_GROUP:-ssh-user}
 WHEEL_GROUP=${WHEEL_GROUP:-wheel}
 # Masked services cannot start. The defaults cover units this device does not use.
 MASK_SERVICES=${MASK_SERVICES:-getty@tty1.service e2scrub_reap.service networking.service systemd-pstore.service suspend.target hibernate.target hybrid-sleep.target suspend-then-hibernate.target}
 ENABLE_SERVICES=${ENABLE_SERVICES:-systemd-networkd.service systemd-resolved.service systemd-timesyncd.service wpa_supplicant@wlan0.service}
-export SSHD_CIPHERS SSHD_MACS SSHD_KEX SSH_CIPHERS SSH_MACS SSH_KEX SSH_GROUP WHEEL_GROUP MASK_SERVICES ENABLE_SERVICES
+export SSH_GROUP WHEEL_GROUP MASK_SERVICES ENABLE_SERVICES
 FIREWALL_RULES_V4_EXTRA=${FIREWALL_RULES_V4_EXTRA:-}
 FIREWALL_RULES_V6_EXTRA=${FIREWALL_RULES_V6_EXTRA:-}
 export FIREWALL_RULES_V4_EXTRA FIREWALL_RULES_V6_EXTRA

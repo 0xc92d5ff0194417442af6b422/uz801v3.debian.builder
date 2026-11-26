@@ -2,10 +2,10 @@
 
 . ./lib/steps/common.sh
 
-# Crypto lists come from config.env. sshd -t checks the config at the end of this step.
-render device/image/templates/ssh/ssh_config.in "${CHROOT}"/etc/ssh/ssh_config SSH_CIPHERS SSH_MACS SSH_KEX
+# sshd -t checks the config at the end of this step.
+cp device/image/templates/ssh/ssh_config.in "${CHROOT}"/etc/ssh/ssh_config
 
-render device/image/templates/ssh/sshd_config.in "${CHROOT}"/etc/ssh/sshd_config SSH_PORT ADMIN_USER SSH_GROUP SSHD_CIPHERS SSHD_MACS SSHD_KEX
+render device/image/templates/ssh/sshd_config.in "${CHROOT}"/etc/ssh/sshd_config SSH_PORT ADMIN_USER SSH_GROUP
 
 # With SSH_ALLOW_FROM set, a Match block denies login from every other address.
 if [ -n "${SSH_ALLOW_FROM}" ]; then
