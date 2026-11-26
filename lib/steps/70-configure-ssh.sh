@@ -7,6 +7,12 @@ cp device/image/templates/ssh/ssh_config.in "${CHROOT}"/etc/ssh/ssh_config
 
 render device/image/templates/ssh/sshd_config.in "${CHROOT}"/etc/ssh/sshd_config SSH_PORT ADMIN_USER SSH_GROUP
 
+# Column 5 of moduli is the size in bits. Groups under 3071 bits are removed in case group exchange is enabled again.
+if [ -f "${CHROOT}"/etc/ssh/moduli ]; then
+    awk '$1 ~ /^#/ || $5 >= 3071' "${CHROOT}"/etc/ssh/moduli > "${CHROOT}"/etc/ssh/moduli.new
+    mv "${CHROOT}"/etc/ssh/moduli.new "${CHROOT}"/etc/ssh/moduli
+fi
+
 # With SSH_ALLOW_FROM set, a Match block denies login from every other address.
 if [ -n "${SSH_ALLOW_FROM}" ]; then
     if printf '%s\n' ${SSH_ALLOW_FROM} | grep -qvE '^[0-9a-fA-F:.]+(/[0-9]+)?$'; then

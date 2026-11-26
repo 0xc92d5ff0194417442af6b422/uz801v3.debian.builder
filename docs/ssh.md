@@ -26,6 +26,8 @@ The client refuses unknown host keys (`StrictHostKeyChecking yes`). It does not 
 
 Step 70 writes the public keys from `ADMIN_SSH_KEYS` to `~admin/.ssh/authorized_keys`.
 
+Step 70 also removes Diffie-Hellman groups under 3071 bits from `/etc/ssh/moduli`. The key exchange list does not use these groups now. If group exchange is enabled again, the small groups are not offered.
+
 The image has no SSH host keys. Each device creates its own Ed25519 key on first boot (`ssh-hostkeys.service`).
 
 ## Limit the source addresses
