@@ -84,7 +84,7 @@ Only the network modes (`rndis`, `ecm`, `cdc-ecm` and `acm-ecm`) get the `usb0` 
 | `BLUETOOTH` | `no` | Adds the Bluetooth drivers, the bluez package and the wcnss_bt device tree node. |
 | `MODEM` | `no` | Adds the modem kernel options and device tree nodes. The modem firmware is not in the repository. |
 | `TRIM_DTB` | `no` | `yes` deletes the unused device tree nodes and raises the usable memory to 476 MB. `no` keeps them, disables the GPU, display and video nodes, and leaves the usable memory at 317 MB. |
-| `KEXEC` | `yes` | Builds kexec and suspend support. |
+| `KEXEC` | `yes` | Builds kexec and suspend support. `no` also sets `kernel.kexec_load_disabled = 1`, which blocks kexec at runtime. |
 
 ### Kernel
 
