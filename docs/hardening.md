@@ -48,6 +48,19 @@ The files in `/etc/sudoers.d/` set these rules:
 | `017_timestamptype` | The sudo session belongs to the terminal. |
 
 The `wheel` rule is in `/etc/sudoers.d/wheel`. The build sets its mode to `0440`.
+## Service sandboxing
+
+These units run with `NoNewPrivileges=yes`, `ProtectSystem=strict`, `PrivateTmp=yes` and `ProtectHome=yes`:
+
+- `log-forward.service`, which exists only with `LOG_FORWARD="yes"`
+- `led-boot-animation.service`, `led-progress-sysinit.service`, `led-progress-basic.service`, `led-progress-multiuser.service` and `led-triggers.service`
+- `zram-swap.service`, which exists only with `ZRAM="yes"`
+- `watchdog.service`, through the drop-in `watchdog.service.d/hardening.conf`. The drop-in also sets `ReadWritePaths=/run`.
+
+`ProtectSystem=strict` makes the file system read-only. `/dev`, `/proc` and `/sys` stay writable. The LED, zram and watchdog units need only those paths.
+
+Check the exposure of a unit on the device with `systemd-analyze security <unit>`.
+
 ## Kernel settings at runtime
 
 The files in `/etc/sysctl.d/` set these values. The build copies all of them, except `zz-le9uo.conf`. Step 62 removes that file unless `PATCH_LE9UO="yes"` and the kernel is built from source.

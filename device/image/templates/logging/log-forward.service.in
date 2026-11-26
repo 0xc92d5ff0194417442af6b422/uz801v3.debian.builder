@@ -4,6 +4,10 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 ExecStart=/bin/bash -c "exec 3<>/dev/tcp/@LOG_FORWARD_HOST@/@LOG_FORWARD_PORT@; exec journalctl -b -f -o short-precise --no-pager >&3"
 Restart=always
 RestartSec=5
