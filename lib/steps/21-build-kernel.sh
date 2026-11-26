@@ -77,6 +77,8 @@ done
 # Always on. The CPU power driver (CPR) and BBR depend on these options.
 # The image sysctl sets the fq qdisc for BBR, so fq stays on without the minimal list.
 set_config CONFIG_SYSCTL y
+# The SSH rate limit in the firewall rules uses the hashlimit match.
+set_config CONFIG_NETFILTER_XT_MATCH_HASHLIMIT m
 if [ "${ZRAM}" = yes ]; then
     set_config CONFIG_ZRAM y
 else

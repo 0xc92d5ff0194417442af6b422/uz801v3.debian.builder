@@ -14,7 +14,7 @@ The build edits `.config` in three passes:
 
 1. Minimal list. `MINIMAL_KERNEL="yes"` applies `device/kernel/minimal-kernel.txt`. The list turns off most drivers. The default is `no`.
 2. Custom file. `KERNEL_OPTIONS` names a file with `CONFIG_X=value` and `# CONFIG_X is not set` lines. The build applies it after the minimal list, so it can override the list.
-3. Feature blocks. The build sets the options that each feature needs. Examples are Wi-Fi, Bluetooth, modem, USB gadget, kexec, debugging, crash capture and the root filesystem. These run last, so they override the first two passes.
+3. Feature blocks. The build sets the options that each feature needs. Examples are Wi-Fi, Bluetooth, modem, USB gadget, kexec, debugging, crash capture and the root filesystem. These run last, so they override the first two passes. The hashlimit match (`CONFIG_NETFILTER_XT_MATCH_HASHLIMIT=m`) is always on, because the firewall rate limit for SSH needs it.
 
 A feature block can override an option set in a custom file.
 
