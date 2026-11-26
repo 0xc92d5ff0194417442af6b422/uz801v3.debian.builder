@@ -10,7 +10,7 @@ The IPv4 rules set the default policy to `DROP` for input and forward. They acce
 
 - traffic on the loopback interface
 - replies to connections that the device started
-- SSH on `SSH_PORT`, from `wlan0` and `usb0`
+- SSH on `SSH_PORT`, from `wlan0` and `usb0`. A source address that opens more than 10 new SSH connections per minute is dropped after a burst of 5. The rule uses the `hashlimit` match, so the kernel needs `xt_hashlimit`.
 - DHCP replies on `wlan0`
 - ping requests from `wlan0` and `usb0`
 

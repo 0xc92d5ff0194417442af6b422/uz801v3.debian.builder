@@ -4,8 +4,10 @@
 :OUTPUT ACCEPT [0:0]
 -A INPUT -i lo -j ACCEPT
 -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -i wlan0 -p tcp --dport @SSH_PORT@ -m conntrack --ctstate NEW -m hashlimit --hashlimit-name ssh-wlan0 --hashlimit-mode srcip --hashlimit-above 10/min --hashlimit-burst 5 -j DROP
 -A INPUT -i wlan0 -p tcp --dport @SSH_PORT@ -j ACCEPT
 -A INPUT -i wlan0 -p udp --sport 67 --dport 68 -j ACCEPT
+-A INPUT -i usb0 -p tcp --dport @SSH_PORT@ -m conntrack --ctstate NEW -m hashlimit --hashlimit-name ssh-usb0 --hashlimit-mode srcip --hashlimit-above 10/min --hashlimit-burst 5 -j DROP
 -A INPUT -i usb0 -p tcp --dport @SSH_PORT@ -j ACCEPT
 -A INPUT -i wlan0 -p icmp --icmp-type echo-request -j ACCEPT
 -A INPUT -i usb0 -p icmp --icmp-type echo-request -j ACCEPT
