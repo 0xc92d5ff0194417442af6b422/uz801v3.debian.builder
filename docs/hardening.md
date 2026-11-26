@@ -7,6 +7,7 @@ These settings limit accounts, login, sudo, the kernel and the network stack. Th
 - The root account is locked.
 - The account in `ADMIN_USER` is the only login account. It joins the groups `SSH_GROUP` and `WHEEL_GROUP`. Its home directory has mode `0700`.
 - Members of `WHEEL_GROUP` can run any command with sudo.
+- `su` works only for root and the `wheel` group. The rule is `pam_wheel.so group=wheel` in `/etc/pam.d/su`. The group name is fixed to `wheel` in this file. A different `WHEEL_GROUP` needs an edit to this file.
 - New accounts get `/bin/false` as their shell (`/etc/default/useradd` and `/etc/adduser.conf`).
 - The file `/etc/securetty` is empty. Root cannot log in on a local terminal.
 - `/etc/cron.allow` and `/etc/at.allow` list only `root`.
