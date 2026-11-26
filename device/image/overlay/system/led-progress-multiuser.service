@@ -4,6 +4,10 @@ DefaultDependencies=no
 After=multi-user.target
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 Type=oneshot
 ExecStart=/usr/sbin/led-boot.sh progress green:wlan
 

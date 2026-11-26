@@ -5,6 +5,10 @@ After=basic.target
 Before=multi-user.target
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 Type=oneshot
 ExecStart=/usr/sbin/led-boot.sh progress red:power
 

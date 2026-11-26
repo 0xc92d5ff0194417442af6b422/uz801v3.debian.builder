@@ -5,6 +5,10 @@ After=sysinit.target
 Before=basic.target
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 Type=oneshot
 ExecStart=/usr/sbin/led-boot.sh progress blue:wan
 

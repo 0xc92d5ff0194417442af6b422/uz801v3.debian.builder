@@ -4,6 +4,10 @@ DefaultDependencies=no
 Before=swap.target
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/sbin/zram-swap.sh start

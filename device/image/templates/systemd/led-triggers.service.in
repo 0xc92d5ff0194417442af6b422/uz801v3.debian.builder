@@ -3,6 +3,10 @@ Description=Set LED triggers for Wi-Fi, eMMC, and CPU activity
 After=wpa_supplicant@wlan0.service
 
 [Service]
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectHome=yes
 # simple: the start job ends at once, so waiting for the animation does not hold up startup.
 # The triggers are set only after the boot animation has finished, because the animation
 # changes the trigger of every LED.
