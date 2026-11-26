@@ -10,7 +10,8 @@ The template `device/image/templates/ssh/sshd_config.in` sets these rules:
 | `PermitRootLogin` | `no` | Root cannot log in over SSH. |
 | `PasswordAuthentication` | `no` | Only keys work. |
 | `AuthenticationMethods` | `publickey` | A key is required. |
-| `PubkeyAcceptedAlgorithms` | `ssh-ed25519` | Only Ed25519 keys are accepted. |
+| `PubkeyAcceptedAlgorithms` | `ssh-ed25519` | Only Ed25519 keys are accepted. RSA keys are refused. |
+| `HostKeyAlgorithms` | `ssh-ed25519` | The server offers only its Ed25519 host key. |
 | `AllowUsers` | `ADMIN_USER` | Only this account can log in. |
 | `AllowGroups` | `SSH_GROUP` | The account must be in this group. |
 | `MaxAuthTries` | `3` | Three failed attempts per connection. |
@@ -18,7 +19,7 @@ The template `device/image/templates/ssh/sshd_config.in` sets these rules:
 | `AllowTCPForwarding`, `AllowAgentForwarding`, `X11Forwarding` | `no` | No tunnels, agent forwarding or X11. |
 | `Ciphers`, `MACs`, `KexAlgorithms` | Fixed in the template. | Cipher, MAC and key exchange lists. They are not set in `config.env`. |
 
-The client file `/etc/ssh/ssh_config` has its cipher, MAC and key exchange lists fixed in the template.
+The client file `/etc/ssh/ssh_config` accepts only Ed25519 host keys and Ed25519 user keys. RSA keys are refused. Its cipher, MAC and key exchange lists are fixed in the template too.
 
 Step 70 writes the public keys from `ADMIN_SSH_KEYS` to `~admin/.ssh/authorized_keys`.
 

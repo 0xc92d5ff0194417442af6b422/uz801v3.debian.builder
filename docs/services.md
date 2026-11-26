@@ -17,7 +17,7 @@ The default masked units are `getty@tty1`, `e2scrub_reap`, `networking`, `system
 | `firewall.service` | multi-user | Loads the IPv4 and IPv6 rules. | Always. |
 | `zram-swap.service` | multi-user | Runs `zram-swap.sh start`. | `ZRAM="yes"`. Removed otherwise. |
 | `thp-disable.service` | multi-user | Turns off transparent huge pages. | The kernel has the file. |
-| `ssh-hostkeys.service` | multi-user | Runs `ssh-keygen -A`. | The Ed25519 host key is missing. |
+| `ssh-hostkeys.service` | multi-user | Creates the Ed25519 host key. No RSA or ECDSA key is made. | The Ed25519 host key is missing. |
 | `wcnss-mac-address.service` | sysinit | Creates the Wi-Fi MAC address. | The MAC file is missing. |
 | `wifi-powersave-off.service` | multi-user | Runs `iw dev wlan0 set power_save off`. | `WIFI="yes"`. Removed otherwise. |
 | `apt-security-upgrade.service` | Timer | Installs security updates. | Runs at `UPGRADE_TIME` with a random delay up to `UPGRADE_DELAY`. |
