@@ -18,7 +18,7 @@ cp config/config.env.example config.env
 chmod 600 config.env
 ```
 
-The file uses shell syntax. Put each value in double quotes. The build removes Windows line endings, so a file edited on Windows still works.
+The file is read as plain text, not run as a shell script. Write each value as `NAME="value"`. Text such as `$`, backquotes and backslashes stays as typed. A quoted value can span several lines. Only spaces or a `#` comment may follow the closing quote. The build removes Windows line endings, so a file edited on Windows still works.
 
 ## Required values
 

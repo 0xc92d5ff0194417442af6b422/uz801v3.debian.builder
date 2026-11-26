@@ -111,9 +111,10 @@ if [ "${CONFIG_GIVEN}" = yes ] && [ ! -f "${CONFIG_FILE}" ]; then
     exit 2
 fi
 if [ -f "${CONFIG_FILE}" ]; then
-    # Windows line endings (CRLF) are removed first. Otherwise the shell keeps the carriage return in each value.
+    # The file is read as data, not run. Windows line endings (CRLF) are removed by read_config.
+    . ./lib/config.sh
     set -a
-    eval "$(tr -d '\r' < "${CONFIG_FILE}")"
+    read_config "${CONFIG_FILE}"
     set +a
 fi
 # A build run with --from or --only reuses the values that the first run generated. Earlier steps already wrote them into the image.
