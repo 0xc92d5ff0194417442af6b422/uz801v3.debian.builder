@@ -22,6 +22,8 @@ The template `device/image/templates/ssh/sshd_config.in` sets these rules:
 
 The client file `/etc/ssh/ssh_config` accepts only Ed25519 host keys and Ed25519 user keys. RSA keys are refused. Its cipher, MAC and key exchange lists are fixed in the template too.
 
+The client refuses unknown host keys (`StrictHostKeyChecking yes`). It does not check host keys in DNS. It does not add keys to the agent. It turns off all forwarding and `LocalCommand`.
+
 Step 70 writes the public keys from `ADMIN_SSH_KEYS` to `~admin/.ssh/authorized_keys`.
 
 The image has no SSH host keys. Each device creates its own Ed25519 key on first boot (`ssh-hostkeys.service`).

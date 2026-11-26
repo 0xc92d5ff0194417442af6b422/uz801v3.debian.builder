@@ -8,14 +8,15 @@ Host *
     HashKnownHosts yes
     RekeyLimit 512M 1h
 
-    StrictHostKeyChecking ask
+    StrictHostKeyChecking yes
     CheckHostIP yes
-    VerifyHostKeyDNS ask
+    VerifyHostKeyDNS no
     ForwardAgent no
     ForwardX11 no
     ForwardX11Trusted no
+    ClearAllForwardings yes
+    PermitLocalCommand no
     PasswordAuthentication no
-    ChallengeResponseAuthentication no
     PubkeyAuthentication yes
     PreferredAuthentications publickey
 
@@ -28,17 +29,16 @@ Host *
     HostbasedAuthentication no
     KbdInteractiveAuthentication no
 
-    Protocol 2
     Compression no
 
-    AddKeysToAgent yes
+    AddKeysToAgent no
     IdentitiesOnly yes
 
     LogLevel INFO
 
     VisualHostKey no
 
-    UpdateHostKeys ask
+    UpdateHostKeys no
     CanonicalizeHostname yes
     CanonicalizeFallbackLocal no
     CanonicalizeMaxDots 1
