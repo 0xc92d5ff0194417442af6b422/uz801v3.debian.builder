@@ -1,3 +1,4 @@
+label debian
 linux /vmlinuz
 fdt /dtbs/qcom/@DTB_NAME@
 append root=PARTUUID=@ROOT_PARTUUID@ @BOOT_ARGS@

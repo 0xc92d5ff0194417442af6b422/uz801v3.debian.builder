@@ -14,7 +14,7 @@ The flashing steps are in the OpenStick guide for this board: [UZ801 flashing](h
 
 ## First boot
 
-The device boots the kernel from `/boot/extlinux/extlinux.conf`. It finds the root partition by its PARTUUID. The first boot does three things:
+The device boots the kernel from `/boot/extlinux/extlinux.conf`. The file has a `label` line, because lk2nd stops at a file with no label. The boot entry finds the root partition by its PARTUUID. The first boot does three things:
 
 1. The `resize-rootfs` service runs once. It grows the root filesystem to fill the eMMC partition.
 2. The clock is set from the network. Until then, it starts at the last saved time.
