@@ -184,6 +184,6 @@ progress "${total}" "${total}" finished
 
 msg OK "build finished"
 if [ "${ONLY_KERNEL}" != yes ]; then
-    msg INFO "${ADMIN_USER} password: ${ADMIN_PASSWORD}"
+    printf '%s\n' "[INFO] ${ADMIN_USER} password: ${ADMIN_PASSWORD}" >&3
 fi
 finish_log
