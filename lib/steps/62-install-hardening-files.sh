@@ -4,6 +4,10 @@
 
 # Hardening files for sudo, cron, at, profile and sysctl.
 cp -a --no-preserve=ownership device/image/overlay/hardening/etc/. "${CHROOT}"/etc/
+# Without kexec, no kernel can be loaded at runtime. The value cannot be cleared until the next boot.
+if [ "${KEXEC}" = no ]; then
+    printf 'kernel.kexec_load_disabled = 1\n' > "${CHROOT}"/etc/sysctl.d/zz-kexec.conf
+fi
 # The LE9UO sysctl file only works with its kernel patch. A prebuilt kernel has no patches, so the file is removed.
 if [ "${PATCH_LE9UO}" != yes ] || [ "${KERNEL_SOURCE}" != build ]; then
     rm -f "${CHROOT}"/etc/sysctl.d/zz-le9uo.conf

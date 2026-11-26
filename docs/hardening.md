@@ -61,6 +61,8 @@ The files in `/etc/sysctl.d/` set these values. The build copies all of them, ex
 | `zz-printk.conf` | Sets the console log level. |
 | `zz-le9uo.conf` | Protects 15 percent of memory for anonymous pages. Only with the LE9UO patch. |
 
+For `KEXEC="no"`, step 62 writes `zz-kexec.conf` with `kernel.kexec_load_disabled = 1`. The running system then cannot load a new kernel with kexec. The value cannot be cleared until the next boot.
+
 `thp-disable.service` turns off transparent huge pages at boot.
 ## Kernel modules
 
