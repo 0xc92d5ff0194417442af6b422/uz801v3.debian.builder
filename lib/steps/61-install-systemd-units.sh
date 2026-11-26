@@ -54,3 +54,14 @@ if [ "${LOG_FORWARD}" = yes ]; then
     render device/image/templates/logging/log-forward.service.in "${CHROOT}"/etc/systemd/system/log-forward.service LOG_FORWARD_HOST LOG_FORWARD_PORT
     ln -sf /etc/systemd/system/log-forward.service "${CHROOT}"/etc/systemd/system/multi-user.target.wants/log-forward.service
 fi
+
+# With LOG_ARCHIVE=yes, a daily timer copies the archived journal files to /var/backups/logs.
+# The directory is created here, because ReadWritePaths in the service needs it to exist.
+if [ "${LOG_ARCHIVE}" = yes ]; then
+    install -p -m 0755 device/image/overlay/usr/sbin/journal-archive.sh "${CHROOT}"/usr/sbin
+    printf 'COUNT=%s\n' "${LOG_ARCHIVE_COUNT}" > "${CHROOT}"/etc/default/journal-archive
+    cp device/image/templates/logging/journal-archive.service device/image/templates/logging/journal-archive.timer "${CHROOT}"/etc/systemd/system
+    mkdir -p "${CHROOT}"/var/backups/logs "${CHROOT}"/etc/systemd/system/timers.target.wants
+    chmod 0700 "${CHROOT}"/var/backups/logs
+    ln -sf /etc/systemd/system/journal-archive.timer "${CHROOT}"/etc/systemd/system/timers.target.wants/journal-archive.timer
+fi

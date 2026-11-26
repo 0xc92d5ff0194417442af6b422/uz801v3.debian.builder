@@ -51,8 +51,14 @@ case "${LOG_LEVEL}:${LOG_STORAGE}" in
     *:ram) JOURNAL_STORAGE=volatile ;;
 esac
 export JOURNAL_STORAGE JOURNAL_MAX_LEVEL
+# LOG_ARCHIVE=yes starts a new journal file each day. LOG_ARCHIVE=no turns off the daily start. Files still rotate when they reach their size limit.
+case "${LOG_ARCHIVE}" in
+    yes) JOURNAL_MAX_FILE_SEC=1day ;;
+    no) JOURNAL_MAX_FILE_SEC=infinity ;;
+esac
+export JOURNAL_MAX_FILE_SEC
 mkdir -p "${CHROOT}"/etc/systemd/journald.conf.d
-render device/image/templates/logging/journald-logging.conf.in "${CHROOT}"/etc/systemd/journald.conf.d/zz-logging.conf JOURNAL_STORAGE JOURNAL_MAX_LEVEL LOG_MAX_SIZE
+render device/image/templates/logging/journald-logging.conf.in "${CHROOT}"/etc/systemd/journald.conf.d/zz-logging.conf JOURNAL_STORAGE JOURNAL_MAX_LEVEL JOURNAL_MAX_FILE_SEC LOG_MAX_SIZE LOG_ARCHIVE_COUNT
 
 if [ "${LOG_SUDO}" = no ]; then
     rm -f "${CHROOT}"/etc/sudoers.d/012_logfile
