@@ -12,6 +12,7 @@ The template `device/image/templates/ssh/sshd_config.in` sets these rules:
 | `AuthenticationMethods` | `publickey` | A key is required. |
 | `PubkeyAcceptedAlgorithms` | `ssh-ed25519` | Only Ed25519 keys are accepted. RSA keys are refused. |
 | `HostKeyAlgorithms` | `ssh-ed25519` | The server offers only its Ed25519 host key. |
+| `PerSourcePenalties` | `yes` | Bans a source address that fails too often. Needs OpenSSH 9.8 or later. |
 | `AllowUsers` | `ADMIN_USER` | Only this account can log in. |
 | `AllowGroups` | `SSH_GROUP` | The account must be in this group. |
 | `MaxAuthTries` | `3` | Three failed attempts per connection. |
