@@ -25,7 +25,11 @@ chmod 700 "${CHROOT}"/home/"${u}"/.ssh
 chmod 600 "${CHROOT}"/home/"${u}"/.ssh/authorized_keys
 chroot "${CHROOT}" qemu-aarch64-static /bin/chown -R "${u}:${u}" /home/"${u}"/.ssh
 
-# sshd -t needs host keys. Step 71 removes every host key, so each device makes its own on first boot.
+# sshd -t needs a host key. Step 71 removes every host key, so each device makes its own on first boot.
+# Only Ed25519 is made. ssh-keygen -A would also make RSA and ECDSA keys.
 mkdir -p "${CHROOT}"/run/sshd
-chroot "${CHROOT}" qemu-aarch64-static /usr/bin/ssh-keygen -A
+# The base system may already have this key. ssh-keygen would then ask to overwrite it and fail, so the key is made only when missing.
+if [ ! -f "${CHROOT}"/etc/ssh/ssh_host_ed25519_key ]; then
+    chroot "${CHROOT}" qemu-aarch64-static /usr/bin/ssh-keygen -q -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+fi
 chroot "${CHROOT}" qemu-aarch64-static /usr/sbin/sshd -t
