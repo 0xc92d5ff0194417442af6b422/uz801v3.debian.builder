@@ -12,7 +12,7 @@ else
     trap 'rm -rf "${KERNEL_TMP}"' EXIT
     wget --progress=bar:force -O "${KERNEL_TMP}"/kernel.apk "${KERNEL_APK_URL}" 2>&4
     echo "${KERNEL_SHA256}  ${KERNEL_TMP}/kernel.apk" | sha256sum -c
-    tar xkzf "${KERNEL_TMP}"/kernel.apk -C "${CHROOT}" --exclude=.PKGINFO --exclude=.SIGN* --exclude=boot/dtbs 2>/dev/null
+    tar xkzf "${KERNEL_TMP}"/kernel.apk -C "${CHROOT}" --exclude=.PKGINFO --exclude=.SIGN* --exclude=boot/dtbs
     tar xkzf "${KERNEL_TMP}"/kernel.apk -C "${CHROOT}" boot/dtbs/qcom/"${DTB_NAME}"
 fi
 
