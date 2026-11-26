@@ -7,12 +7,13 @@ The build runs on an x86 Linux host. One run makes the bootloader, the kernel, t
 ## Features
 
 - Debian `trixie` root filesystem, built with debootstrap. The arm64 steps run under qemu.
-- Kernel 6.12.118 (LTS), built from source, with optional patches: BBR v3, LE9UO, zstd, CPR and SMSM. The CPR patch adds the higher CPU frequencies (1094400, 1152000 and 1209600 kHz) [*](docs/kernel.md#patches)
-- Root filesystem as ext4, xfs or btrfs. btrfs can compress the data.
-- Wi-Fi, Bluetooth, modem and USB gadget modes. You set each one in `config.env`.
+- A hardened Debian install. [Hardening](docs/hardening.md) lists each change.
 - SSH with key-only login and a firewall.
-- Optional zram swap.
+- Wi-Fi, Bluetooth, modem and USB gadget modes. You set each one in `config.env`.
+- Kernel 6.12.118 (LTS), built from source, with optional patches: BBR v3, LE9UO, zstd, CPR and SMSM. The CPR patch adds the higher CPU frequencies (1094400, 1152000 and 1209600 kHz) [*](docs/kernel.md#patches)
 - Trimmed device tree (`TRIM_DTB="yes"`). The usable memory rises from 317 MB to 476 MB. [*](docs/kernel.md#device-tree-trimming)
+- Root filesystem as ext4, xfs or btrfs. btrfs can compress the data.
+- Optional zram swap.
 - One file, `config.env`, holds all settings. A failed build can resume from a step.
 - A Docker image for the build.
 
