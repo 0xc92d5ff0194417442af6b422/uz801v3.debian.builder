@@ -1,0 +1,12 @@
+[Unit]
+Description=Copy archived journal files to /var/backups/logs
+After=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/journal-archive.sh
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/backups/logs
+PrivateTmp=yes
+ProtectHome=yes

@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily copy of the archived journal files
+
+[Timer]
+OnCalendar=daily
+Persistent=yes
+
+[Install]
+WantedBy=timers.target

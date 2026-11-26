@@ -3,3 +3,6 @@ Storage=@JOURNAL_STORAGE@
 MaxLevelStore=@JOURNAL_MAX_LEVEL@
 SystemMaxUse=@LOG_MAX_SIZE@
 RuntimeMaxUse=@LOG_MAX_SIZE@
+MaxFileSec=@JOURNAL_MAX_FILE_SEC@
+SystemMaxFiles=@LOG_ARCHIVE_COUNT@
+RuntimeMaxFiles=@LOG_ARCHIVE_COUNT@
