@@ -6,7 +6,7 @@ AllowTCPForwarding no
 AllowUsers @ADMIN_USER@
 AuthenticationMethods publickey
 AuthorizedKeysFile .ssh/authorized_keys
-Ciphers @SSHD_CIPHERS@
+Ciphers chacha20-poly1305@openssh.com
 ClientAliveCountMax 6
 ClientAliveInterval 30
 Compression no
@@ -22,10 +22,10 @@ HostKey /etc/ssh/ssh_host_ed25519_key
 IgnoreRhosts yes
 KbdInteractiveAuthentication no
 KerberosAuthentication no
-KexAlgorithms @SSHD_KEX@
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
 LoginGraceTime 30
 LogLevel INFO
-MACs @SSHD_MACS@
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256
 MaxAuthTries 3
 maxsessions 2
 maxstartups 2:50:10
