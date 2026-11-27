@@ -53,6 +53,7 @@ The example file groups the values. The tables below list the main ones.
 | `WIFI` | `yes` | Builds the Wi-Fi drivers and firmware loader. Set it to `no` to remove them. |
 | `WIFI_MAC` | empty | A fixed MAC address. If empty, the device makes a random address on first boot. |
 | `DNS_SERVER` | empty | If empty, the device uses the DNS servers from DHCP. A value replaces them. |
+| `HOSTS_ENTRIES` | empty | Extra `/etc/hosts` lines, one per line: an address, a host name, then optional aliases, for example `192.168.1.10 nas.lan nas`. Blank lines and `#` comments are ignored. A line that is already in the file is not added again. |
 | `USB_ADDRESS` | `192.168.254.1/24` | The device address on the USB network interface. |
 
 ### USB gadget

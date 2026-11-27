@@ -22,6 +22,7 @@ Step 63 checks the IPv4 rules with `iptables-restore --test`. The check is skipp
 - `systemd-networkd` configures `wlan0` (`/etc/systemd/network/wlan0.network`).
 - The file `usb0.network` is added only when `USB_GADGET` is `yes` and the mode is `rndis`, `ecm`, `cdc-ecm` or `acm-ecm`.
 - `/etc/resolv.conf` points to the `systemd-resolved` stub. `DNS_SERVER` sets the DNS server.
+- `/etc/hosts` gets one line for each line in `HOSTS_ENTRIES`.
 - `systemd-timesyncd` uses the servers in `NTP_SERVERS`. The default is `pool.ntp.org`.
 - The Wi-Fi file `/etc/wpa_supplicant/wpa_supplicant-wlan0.conf` has mode `0600` because it holds the password.
 - `wifi-powersave-off.service` turns off Wi-Fi power save on `wlan0` at boot. It is removed when `WIFI="no"`.
