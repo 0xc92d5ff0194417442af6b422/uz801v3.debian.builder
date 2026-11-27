@@ -6,6 +6,10 @@
 # A line that already ends with the name is left alone, so a second run of this step adds nothing.
 echo "${HOST_NAME}" > "${CHROOT}"/etc/hostname
 sed -i "/localhost/ { / ${HOST_NAME}\$/! s/\$/ ${HOST_NAME}/; }" "${CHROOT}"/etc/hosts
+# Adds each HOSTS_ENTRIES line to /etc/hosts. A line already in the file is not added again.
+printf '%s\n' "${HOSTS_ENTRIES}" | grep -vE '^[[:space:]]*(#|$)' | while IFS= read -r entry; do
+    grep -qxF "${entry}" "${CHROOT}"/etc/hosts || printf '%s\n' "${entry}" >> "${CHROOT}"/etc/hosts
+done
 
 # A fixed machine ID is written when MACHINE_ID is set. Otherwise systemd makes one on first boot.
 mkdir -p "${CHROOT}"/var/lib/dbus

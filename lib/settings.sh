@@ -122,6 +122,12 @@ fi
 if ! printf '%s\n' "${HOST_NAME}" | grep -qE '^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$'; then
     fail "HOST_NAME must be 1 to 63 lowercase letters, digits or hyphens, not starting or ending with a hyphen"
 fi
+HOSTS_ENTRIES=${HOSTS_ENTRIES:-}
+export HOSTS_ENTRIES
+if printf '%s\n' "${HOSTS_ENTRIES}" | grep -vE '^[[:space:]]*(#|$)' \
+    | grep -vqE '^[0-9A-Fa-f:.]+[[:space:]]+[A-Za-z0-9._-]+([[:space:]]+[A-Za-z0-9._-]+)*[[:space:]]*$'; then
+    fail "HOSTS_ENTRIES: each line must be an address, then one or more host names, for example: 192.168.1.10 nas.lan nas"
+fi
 # Prebuilt kernel package. Used only when KERNEL_SOURCE=prebuilt.
 KERNEL_APK_URL=${KERNEL_APK_URL:-https://mirror.postmarketos.org/postmarketos/v24.06/aarch64/linux-postmarketos-qcom-msm8916-6.6-r5.apk}
 KERNEL_SHA256=${KERNEL_SHA256:-8166387eaca9189ff923e635857afb272886b433925a1a7a172d4ed2bab4baa9}
